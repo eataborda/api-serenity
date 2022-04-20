@@ -13,5 +13,4 @@ import org.junit.runners.MethodSorters;
 public class ExampleTest {
     private static String value1;
     private static String value2;
-
 }
