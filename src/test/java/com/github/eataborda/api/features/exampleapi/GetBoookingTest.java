@@ -1,6 +1,7 @@
 package com.github.eataborda.api.features.exampleapi;
 
-import com.github.eataborda.api.steps.ExampleResponseSteps;
+import com.github.eataborda.api.enums.StatusCode;
+import com.github.eataborda.api.steps.APISteps;
 import io.restassured.response.Response;
 import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
 import net.thucydides.core.annotations.Steps;
@@ -20,12 +21,14 @@ import java.util.stream.Collectors;
 @RunWith(SerenityParameterizedRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
-public class ExampleTest {
+public class GetBoookingTest {
+    private static String token;
+    private static APISteps tokenStep = new APISteps();
     private String computerBrand;
     private String computerCompany;
 
     @Steps
-    ExampleResponseSteps exampleResponseSteps;
+    APISteps apiSteps;
 
     @Qualifier
     public String qualifier(){ return "- Computer Brand - "+computerBrand;}
@@ -37,18 +40,21 @@ public class ExampleTest {
 
     @BeforeClass
     public static void setupValues(){
-
+        token = tokenStep.getSessionToken();
     }
 
-    public ExampleTest(String computerBrand, String computerCompany){
+    public GetBoookingTest(String computerBrand, String computerCompany){
         this.computerBrand = computerBrand;
         this.computerCompany = computerCompany;
     }
 
     @Test
-    public void getAsusComputers(){
-        Response response = exampleResponseSteps.getAsusComputers(computerBrand,computerCompany);
-        exampleResponseSteps.validateStatusCode(200,response);
+    public void getAllBookingIds(){
+        Response response = apiSteps.getAllBookingIds(token);
+        apiSteps.validateStatusCode(StatusCode.SC_200.getValue(),response);
+        apiSteps.validateResponseBodyIsNotNullAndNotEmpty(response);
+        apiSteps.validateGetAllBookingIdsResponseBodyHasExpectedFields(response);
+        apiSteps.validateGetAllBookingIdsResponseHeaders(response);
     }
 
     public static List<Object[]> getTestData(){

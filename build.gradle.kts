@@ -1,8 +1,14 @@
 plugins {
     id("net.serenity-bdd.serenity-gradle-plugin") version "3.2.4"
-    java
+    `java-library`
     eclipse
     idea
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
 repositories {
