@@ -6,7 +6,6 @@ import com.github.eataborda.api.enums.HeadersNames;
 import com.github.eataborda.api.enums.BodyNames;
 import com.github.eataborda.api.service.ServiceManager;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
@@ -91,7 +90,7 @@ public class APISteps {
     }
 
     @Step("Validate expected response body fields")
-    public void validateGetBookingInformationByIdResponseBodyHasExpectedFields(Response response) {
+    public void validateResponseBodyHasExpectedFields(Response response) {
         assertion = new SoftAssertions();
         validateResponseBodyExpectedFieldIsNotNullAndEmpty("", BodyNames.FIRST_NAME.getValue(), response);
         validateResponseBodyExpectedFieldIsNotNullAndEmpty("", BodyNames.LAST_NAME.getValue(), response);
@@ -137,7 +136,6 @@ public class APISteps {
         assertion.assertThat(fieldValueLength).as("Field " + fieldName + " is empty, length = " + fieldValueLength).isNotZero();
         assertion.assertThat(isValidResponseBodyDate(fieldValue)).as(fieldName + " value doesn't have the correct format: " + fieldValue).isTrue();
     }
-
 
     @Step("Validate expected response header fields")
     public void validateResponseHeadersHasExpectedFields(Response response) {
@@ -229,15 +227,21 @@ public class APISteps {
     }
 
     @Step("Validate response body has the same values used on request body")
-    public void validateGetBookingInformationByIdResponseBodyHasTheSameFieldValuesUsedOnRequestBody(Response response) {
-        Map<String, Object> requestBody = manager.getRequestBody();
+    public void validateResponseBodyHasSameFieldValuesUsedOnRequestBody(Response response, Boolean jsonUsedToCreateBooking) {
+        Map<String, Object> requestBody = null;
+        if (jsonUsedToCreateBooking) {
+            requestBody = manager.getRequestBody();
+        } else {
+            requestBody = manager.getUpdatedRequestBody();
+        }
         ResponseBody responseBody = response.getBody();
         assertion = new SoftAssertions();
         validateResponseBodyFieldIsEqualsToRequestBodyField(BodyNames.FIRST_NAME.getValue(), responseBody.jsonPath().getString(BodyNames.FIRST_NAME.getValue()), requestBody.get(BodyNames.FIRST_NAME.getValue()).toString());
         validateResponseBodyFieldIsEqualsToRequestBodyField(BodyNames.LAST_NAME.getValue(), responseBody.jsonPath().getString(BodyNames.LAST_NAME.getValue()), requestBody.get(BodyNames.LAST_NAME.getValue()).toString());
         validateResponseBodyFieldIsEqualsToRequestBodyField(BodyNames.TOTAL_PRICE.getValue(), responseBody.jsonPath().getInt(BodyNames.TOTAL_PRICE.getValue()), requestBody.get(BodyNames.TOTAL_PRICE.getValue()));
         validateResponseBodyFieldIsEqualsToRequestBodyField(BodyNames.DEPOSIT_PAID.getValue(), responseBody.jsonPath().getBoolean(BodyNames.DEPOSIT_PAID.getValue()), requestBody.get(BodyNames.DEPOSIT_PAID.getValue()));
-        Map<String,String> bookingDates = new Gson().fromJson(requestBody.get(BodyNames.BOOKING_DATES.getValue()).toString(), new TypeToken<HashMap<String,String>>(){}.getType()) ;
+        Map<String, String> bookingDates = new Gson().fromJson(requestBody.get(BodyNames.BOOKING_DATES.getValue()).toString(), new TypeToken<HashMap<String, String>>() {
+        }.getType());
         validateResponseBodyFieldIsEqualsToRequestBodyField(BodyNames.CHECKIN.getValue(), responseBody.jsonPath().getString(BodyNames.BOOKING_DATES.getValue().concat(".").concat(BodyNames.CHECKIN.getValue())), bookingDates.get(BodyNames.CHECKIN.getValue()));
         validateResponseBodyFieldIsEqualsToRequestBodyField(BodyNames.CHECKOUT.getValue(), responseBody.jsonPath().getString(BodyNames.BOOKING_DATES.getValue().concat(".").concat(BodyNames.CHECKOUT.getValue())), bookingDates.get(BodyNames.CHECKOUT.getValue()));
         validateResponseBodyFieldIsEqualsToRequestBodyField(BodyNames.ADDITIONAL_NEEDS.getValue(), responseBody.jsonPath().getString(BodyNames.ADDITIONAL_NEEDS.getValue()), requestBody.get(BodyNames.ADDITIONAL_NEEDS.getValue()).toString());
@@ -251,5 +255,10 @@ public class APISteps {
 
     public int getIdFromCreatedBooking(Response response) {
         return response.getBody().jsonPath().getInt(BodyNames.BOOKING_ID.getValue());
+    }
+
+    @Step("Update Booking - BookingId = {0}")
+    public Response putUpdateBooking(int bookingId) {
+        return manager.putUpdateBooking(bookingId);
     }
 }
