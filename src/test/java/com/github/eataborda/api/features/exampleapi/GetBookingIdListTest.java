@@ -1,0 +1,26 @@
+package com.github.eataborda.api.features.exampleapi;
+
+import com.github.eataborda.api.enums.StatusCode;
+import com.github.eataborda.api.steps.APISteps;
+import io.restassured.response.Response;
+import net.serenitybdd.junit.runners.SerenityRunner;
+import net.thucydides.core.annotations.Steps;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+@RunWith(SerenityRunner.class)
+public class GetBookingIdListTest {
+
+    @Steps
+    APISteps apiSteps;
+
+    @Test
+    public void getAllBookingIdList() {
+        Response response = apiSteps.getAllBookingIds();
+        apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), response);
+        apiSteps.validateResponseBodyIsNotNullAndNotEmpty(response);
+        apiSteps.validateGetAllBookingIdListResponseBodyHasExpectedFields(response);
+        apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(response);
+        apiSteps.validateResponseHeadersHasExpectedFields(response);
+    }
+}

@@ -5,9 +5,11 @@ public enum HeadersNames {
     ACCEPT("Accept"),
     ACCEPT_ENCODING("Accept-Encoding"),
     CONTENT_TYPE("Content-Type"),
+    CONTENT_LENGTH("Content-Length"),
     SERVER("Server"),
     CONNECTION("Connection"),
     X_POWERED_BY("X-Powered-By"),
+    ETAG("Etag"),
     DATE("Date"),
     VIA("Via");
 
