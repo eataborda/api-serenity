@@ -5,17 +5,19 @@ import com.github.eataborda.api.steps.BookingSteps;
 import io.restassured.response.Response;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
+import net.thucydides.core.annotations.WithTagValuesOf;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(SerenityRunner.class)
+@WithTagValuesOf({"regression", "smoke", "post_method" })
 public class PostCreateBooking {
 
     @Steps
     BookingSteps apiSteps;
 
     @Test
-    public void postCreateBooking(){
+    public void postCreateBooking() {
         Response response = apiSteps.postCreateBooking();
         apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), response);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(response);
@@ -27,7 +29,7 @@ public class PostCreateBooking {
         apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), responseAfterCreateBooking);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(responseAfterCreateBooking);
         apiSteps.validateResponseBodyHasExpectedFields(responseAfterCreateBooking);
-        apiSteps.validateResponseBodyHasSameFieldValuesUsedOnRequestBody(responseAfterCreateBooking,"create");
+        apiSteps.validateResponseBodyHasSameFieldValuesUsedOnRequestBody(responseAfterCreateBooking, "create");
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(responseAfterCreateBooking);
         apiSteps.validateResponseHeadersHasExpectedFields(responseAfterCreateBooking);
     }

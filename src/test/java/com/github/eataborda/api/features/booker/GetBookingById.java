@@ -5,14 +5,13 @@ import com.github.eataborda.api.steps.BookingSteps;
 import io.restassured.response.Response;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
+import net.thucydides.core.annotations.WithTagValuesOf;
 import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 
 @RunWith(SerenityRunner.class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@WithTagValuesOf({"regression", "smoke", "get_method" })
 public class GetBookingById {
     private static int bookingId;
     private static BookingSteps setupApiSteps = new BookingSteps();

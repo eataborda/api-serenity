@@ -5,14 +5,13 @@ import com.github.eataborda.api.steps.BookingSteps;
 import io.restassured.response.Response;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
+import net.thucydides.core.annotations.WithTagValuesOf;
 import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 
 @RunWith(SerenityRunner.class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@WithTagValuesOf({"regression", "smoke", "delete_method" })
 public class DeleteBooking {
     private static String token;
     private static int bookingId;
@@ -29,8 +28,8 @@ public class DeleteBooking {
     }
 
     @Test
-    public void deleteBooking(){
-        Response response = apiSteps.deleteBooking(bookingId,token);
+    public void deleteBooking() {
+        Response response = apiSteps.deleteBooking(bookingId, token);
         apiSteps.validateStatusCode(StatusCode.SC_201.getValue(), response);
         //Dejar comentario del status code que debería ser
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(response);

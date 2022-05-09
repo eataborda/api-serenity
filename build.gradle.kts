@@ -27,6 +27,10 @@ tasks.test {
     finalizedBy(tasks.aggregate)
 }
 
+tasks.withType<Test> {
+    systemProperty("tags", System.getProperty("tags"))
+}
+
 defaultTasks ("clean", "test", "aggregate")
 
 dependencies {

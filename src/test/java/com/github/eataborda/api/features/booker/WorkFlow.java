@@ -1,16 +1,17 @@
 package com.github.eataborda.api.features.booker;
 
-
 import com.github.eataborda.api.enums.StatusCode;
 import com.github.eataborda.api.steps.BookingSteps;
 import io.restassured.response.Response;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
+import net.thucydides.core.annotations.WithTagValuesOf;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(SerenityRunner.class)
+@WithTagValuesOf({"regression", "workflow" })
 public class WorkFlow {
     private static String token;
     private static int bookingId;
@@ -45,11 +46,11 @@ public class WorkFlow {
         apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), responseAfterCreateBooking);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(responseAfterCreateBooking);
         apiSteps.validateResponseBodyHasExpectedFields(responseAfterCreateBooking);
-        apiSteps.validateResponseBodyHasSameFieldValuesUsedOnRequestBody(responseAfterCreateBooking,"create");
+        apiSteps.validateResponseBodyHasSameFieldValuesUsedOnRequestBody(responseAfterCreateBooking, "create");
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(responseAfterCreateBooking);
         apiSteps.validateResponseHeadersHasExpectedFields(responseAfterCreateBooking);
         //Update booking
-        Response updateBookingResponse = apiSteps.putUpdateBooking(bookingId,token);
+        Response updateBookingResponse = apiSteps.putUpdateBooking(bookingId, token);
         apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), updateBookingResponse);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(updateBookingResponse);
         apiSteps.validateResponseBodyHasExpectedFields(updateBookingResponse);
@@ -60,11 +61,11 @@ public class WorkFlow {
         apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), responseAfterUpdateBooking);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(responseAfterUpdateBooking);
         apiSteps.validateResponseBodyHasExpectedFields(responseAfterUpdateBooking);
-        apiSteps.validateResponseBodyHasSameFieldValuesUsedOnRequestBody(responseAfterUpdateBooking,"update");
+        apiSteps.validateResponseBodyHasSameFieldValuesUsedOnRequestBody(responseAfterUpdateBooking, "update");
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(responseAfterUpdateBooking);
         apiSteps.validateResponseHeadersHasExpectedFields(responseAfterUpdateBooking);
         //Partial update booking
-        Response partialUpdateResponse = apiSteps.patchPartialUpdateBooking(bookingId,token);
+        Response partialUpdateResponse = apiSteps.patchPartialUpdateBooking(bookingId, token);
         apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), partialUpdateResponse);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(partialUpdateResponse);
         apiSteps.validateResponseBodyHasExpectedFields(partialUpdateResponse);
@@ -75,11 +76,11 @@ public class WorkFlow {
         apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), responseAfterPartialUpdateBooking);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(responseAfterPartialUpdateBooking);
         apiSteps.validateResponseBodyHasExpectedFields(responseAfterPartialUpdateBooking);
-        apiSteps.validateResponseBodyHasSameFieldValuesUsedOnRequestBody(responseAfterPartialUpdateBooking,"partialUpdate");
+        apiSteps.validateResponseBodyHasSameFieldValuesUsedOnRequestBody(responseAfterPartialUpdateBooking, "partialUpdate");
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(responseAfterPartialUpdateBooking);
         apiSteps.validateResponseHeadersHasExpectedFields(responseAfterPartialUpdateBooking);
         //Delete booking
-        Response deleteBookingResponse = apiSteps.deleteBooking(bookingId,token);
+        Response deleteBookingResponse = apiSteps.deleteBooking(bookingId, token);
         apiSteps.validateStatusCode(StatusCode.SC_201.getValue(), deleteBookingResponse);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(deleteBookingResponse);
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(deleteBookingResponse);
