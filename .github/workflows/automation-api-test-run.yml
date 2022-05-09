@@ -15,5 +15,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: automation-api-test-result
-          path: target/site/serenity
+          path: target/site
           retention-days: 3

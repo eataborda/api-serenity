@@ -72,5 +72,4 @@ public class StatusCodeValidation {
         Response response = apiSteps.postCreateBookingWithMalformedBody(StatusCode.SC_500.getValue());
         apiSteps.validateStatusCode(StatusCode.SC_500.getValue(), response);
     }
-
 }
