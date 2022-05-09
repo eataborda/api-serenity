@@ -1,7 +1,7 @@
-package com.github.eataborda.api.features.exampleapi;
+package com.github.eataborda.api.features.booker;
 
 import com.github.eataborda.api.enums.StatusCode;
-import com.github.eataborda.api.steps.APISteps;
+import com.github.eataborda.api.steps.BookingSteps;
 import io.restassured.response.Response;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 public class PostCreateBooking {
 
     @Steps
-    APISteps apiSteps;
+    BookingSteps apiSteps;
 
     @Test
     public void postCreateBooking(){
@@ -23,11 +23,11 @@ public class PostCreateBooking {
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(response);
         apiSteps.validateResponseHeadersHasExpectedFields(response);
         //Steps after verify the post call
-        Response responseAfterCreateBooking = apiSteps.getBookingInformationById(apiSteps.getIdFromCreatedBooking(response));
+        Response responseAfterCreateBooking = apiSteps.getBookingById(apiSteps.getIdFromCreatedBooking(response));
         apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), responseAfterCreateBooking);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(responseAfterCreateBooking);
         apiSteps.validateResponseBodyHasExpectedFields(responseAfterCreateBooking);
-        apiSteps.validateResponseBodyHasSameFieldValuesUsedOnRequestBody(responseAfterCreateBooking,true);
+        apiSteps.validateResponseBodyHasSameFieldValuesUsedOnRequestBody(responseAfterCreateBooking,"create");
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(responseAfterCreateBooking);
         apiSteps.validateResponseHeadersHasExpectedFields(responseAfterCreateBooking);
     }

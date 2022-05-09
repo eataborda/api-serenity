@@ -1,0 +1,19 @@
+name: gatling-test-run
+on:
+  push:
+    paths:
+      - 'src/test/**'
+  schedule:
+    - cron: '0 8 * * 1,4'
+jobs:
+  test-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./gradlew
+      - name: 'Automation api test result'
+        uses: actions/upload-artifact@v2
+        with:
+          name: automation-api-test-result
+          path: target/site/serenity
+          retention-days: 3

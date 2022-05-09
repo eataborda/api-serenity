@@ -11,7 +11,8 @@ public enum HeadersNames {
     X_POWERED_BY("X-Powered-By"),
     ETAG("Etag"),
     DATE("Date"),
-    VIA("Via");
+    VIA("Via"),
+    COOKIE("Cookie");
 
     private final String value;
 

@@ -22,7 +22,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class APISteps {
+public class BookingSteps {
     private ServiceManager manager = new ServiceManager();
     private SoftAssertions assertion;
 
@@ -144,7 +144,12 @@ public class APISteps {
         validateResponseHeaderExpectedFieldValueString(HeadersNames.SERVER.getValue(), HeaderValues.COWBOY.getValue(), response);
         validateResponseHeaderExpectedFieldValueString(HeadersNames.CONNECTION.getValue(), HeaderValues.KEEP_ALIVE.getValue(), response);
         validateResponseHeaderExpectedFieldValueString(HeadersNames.X_POWERED_BY.getValue(), HeaderValues.EXPRESS.getValue(), response);
-        validateResponseHeaderExpectedFieldValueString(HeadersNames.CONTENT_TYPE.getValue(), HeaderValues.APPLICATION_JSON_CHARSET_UTF_8.getValue(), response);
+        String jsonBody = response.getBody().asString();
+        if(jsonBody.equals("Created")||jsonBody.equals("Not Found")){
+            validateResponseHeaderExpectedFieldValueString(HeadersNames.CONTENT_TYPE.getValue(), HeaderValues.TEXT_PLAIN_CHARSET_UTF_8.getValue(), response);
+        }else{
+            validateResponseHeaderExpectedFieldValueString(HeadersNames.CONTENT_TYPE.getValue(), HeaderValues.APPLICATION_JSON_CHARSET_UTF_8.getValue(), response);
+        }
         validateResponseHeaderExpectedFieldValueInteger(HeadersNames.CONTENT_LENGTH.getValue(), response.getHeader(HeadersNames.CONTENT_LENGTH.getValue()));
         validateResponseHeaderExpectedFieldValueNotNull(HeadersNames.ETAG.getValue(), response.getHeader(HeadersNames.ETAG.getValue()), response);
         validateResponseHeaderExpectedFieldValueDate(HeadersNames.DATE.getValue(), response.getHeader(HeadersNames.DATE.getValue()));
@@ -152,7 +157,7 @@ public class APISteps {
         assertion.assertAll();
     }
 
-    @Step("Header - Validate expected size = {0}")
+    @Step("Header - Validate expected number of fields = {0}")
     public void validateHeaderSize(int currentSize, int expectedSize) {
         assertion.assertThat(currentSize).as("Response headers doesn't have the expected number of fields: " + currentSize).isEqualTo(expectedSize);
     }
@@ -200,9 +205,9 @@ public class APISteps {
         return true;
     }
 
-    @Step("Get booking information by id = {0}")
-    public Response getBookingInformationById(int id) {
-        return manager.getBookingInformationById(id);
+    @Step("Get booking by id = {0}")
+    public Response getBookingById(int id) {
+        return manager.getBookingById(id);
     }
 
     @Step("Create booking")
@@ -227,15 +232,25 @@ public class APISteps {
     }
 
     @Step("Validate response body has the same values used on request body")
-    public void validateResponseBodyHasSameFieldValuesUsedOnRequestBody(Response response, Boolean jsonUsedToCreateBooking) {
-        Map<String, Object> requestBody = null;
-        if (jsonUsedToCreateBooking) {
-            requestBody = manager.getRequestBody();
-        } else {
-            requestBody = manager.getUpdatedRequestBody();
-        }
+    public void validateResponseBodyHasSameFieldValuesUsedOnRequestBody(Response response, String jsonUsedOnServiceCall) {
         ResponseBody responseBody = response.getBody();
         assertion = new SoftAssertions();
+        switch (jsonUsedOnServiceCall) {
+            case "create":
+                validateResponseBodyHasSameFieldValuesUsedOnRequestBodyForAllFields(manager.getRequestBody(), responseBody);
+                break;
+            case "update":
+                validateResponseBodyHasSameFieldValuesUsedOnRequestBodyForAllFields(manager.getUpdatedRequestBody(), responseBody);
+                break;
+            case "partialUpdate":
+                validateResponseBodyHasSameFieldValuesUsedOnRequestBodyForSpecificFields(manager.getPartialyUpdatedRequestBody(), responseBody);
+                break;
+            default:
+        }
+        assertion.assertAll();
+    }
+
+    public void validateResponseBodyHasSameFieldValuesUsedOnRequestBodyForAllFields(Map<String, Object> requestBody, ResponseBody responseBody) {
         validateResponseBodyFieldIsEqualsToRequestBodyField(BodyNames.FIRST_NAME.getValue(), responseBody.jsonPath().getString(BodyNames.FIRST_NAME.getValue()), requestBody.get(BodyNames.FIRST_NAME.getValue()).toString());
         validateResponseBodyFieldIsEqualsToRequestBodyField(BodyNames.LAST_NAME.getValue(), responseBody.jsonPath().getString(BodyNames.LAST_NAME.getValue()), requestBody.get(BodyNames.LAST_NAME.getValue()).toString());
         validateResponseBodyFieldIsEqualsToRequestBodyField(BodyNames.TOTAL_PRICE.getValue(), responseBody.jsonPath().getInt(BodyNames.TOTAL_PRICE.getValue()), requestBody.get(BodyNames.TOTAL_PRICE.getValue()));
@@ -245,7 +260,11 @@ public class APISteps {
         validateResponseBodyFieldIsEqualsToRequestBodyField(BodyNames.CHECKIN.getValue(), responseBody.jsonPath().getString(BodyNames.BOOKING_DATES.getValue().concat(".").concat(BodyNames.CHECKIN.getValue())), bookingDates.get(BodyNames.CHECKIN.getValue()));
         validateResponseBodyFieldIsEqualsToRequestBodyField(BodyNames.CHECKOUT.getValue(), responseBody.jsonPath().getString(BodyNames.BOOKING_DATES.getValue().concat(".").concat(BodyNames.CHECKOUT.getValue())), bookingDates.get(BodyNames.CHECKOUT.getValue()));
         validateResponseBodyFieldIsEqualsToRequestBodyField(BodyNames.ADDITIONAL_NEEDS.getValue(), responseBody.jsonPath().getString(BodyNames.ADDITIONAL_NEEDS.getValue()), requestBody.get(BodyNames.ADDITIONAL_NEEDS.getValue()).toString());
-        assertion.assertAll();
+    }
+
+    public void validateResponseBodyHasSameFieldValuesUsedOnRequestBodyForSpecificFields(Map<String, Object> requestBody, ResponseBody responseBody) {
+        validateResponseBodyFieldIsEqualsToRequestBodyField(BodyNames.FIRST_NAME.getValue(), responseBody.jsonPath().getString(BodyNames.FIRST_NAME.getValue()), requestBody.get(BodyNames.FIRST_NAME.getValue()).toString());
+        validateResponseBodyFieldIsEqualsToRequestBodyField(BodyNames.LAST_NAME.getValue(), responseBody.jsonPath().getString(BodyNames.LAST_NAME.getValue()), requestBody.get(BodyNames.LAST_NAME.getValue()).toString());
     }
 
     @Step("Body - Validate {0} field value on response body equals to request body: {1} = {2}")
@@ -257,8 +276,33 @@ public class APISteps {
         return response.getBody().jsonPath().getInt(BodyNames.BOOKING_ID.getValue());
     }
 
-    @Step("Update Booking - BookingId = {0}")
-    public Response putUpdateBooking(int bookingId) {
-        return manager.putUpdateBooking(bookingId);
+    @Step("Update booking by id = {0}")
+    public Response putUpdateBooking(int bookingId, String sessionToken) {
+        return manager.putUpdateBooking(bookingId, sessionToken);
+    }
+
+    @Step("Update booking without authentication header")
+    public Response putUpdateBookingAuthenticationHeader(int bookingId, String sessionToken){
+        return manager.putUpdateBookingAuthenticationHeader(bookingId, sessionToken);
+    }
+
+    @Step("Partial update booking by id = {0}")
+    public Response patchPartialUpdateBooking(int bookingId, String sessionToken) {
+        return manager.patchPartialUpdateBooking(bookingId, sessionToken);
+    }
+
+    @Step("Delete booking by id = {0}")
+    public Response deleteBooking(int bookingId, String sessionToken){
+        return manager.deleteBooking(bookingId, sessionToken);
+    }
+
+    @Step("Get service health check")
+    public Response getHealthCheck(){
+        return manager.getHealthCheck();
+    }
+
+    @Step("Create booking with malformed body - Status code: {0}")
+    public Response postCreateBookingWithMalformedBody(int expectedStatusCode){
+        return manager.postCreateBookingWithMalformedBody(expectedStatusCode);
     }
 }

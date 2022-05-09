@@ -1,7 +1,7 @@
-package com.github.eataborda.api.features.exampleapi;
+package com.github.eataborda.api.features.booker;
 
 import com.github.eataborda.api.enums.StatusCode;
-import com.github.eataborda.api.steps.APISteps;
+import com.github.eataborda.api.steps.BookingSteps;
 import io.restassured.response.Response;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 public class GetBookingIdListTest {
 
     @Steps
-    APISteps apiSteps;
+    BookingSteps apiSteps;
 
     @Test
     public void getAllBookingIdList() {

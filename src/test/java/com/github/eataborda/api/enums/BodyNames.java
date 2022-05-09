@@ -10,7 +10,9 @@ public enum BodyNames {
     CHECKOUT("checkout"),
     ADDITIONAL_NEEDS("additionalneeds"),
     BOOKING("booking"),
-    BOOKING_ID("bookingid");
+    BOOKING_ID("bookingid"),
+    USERNAME("username"),
+    PASSWORD("password");
 
     private final String value;
 

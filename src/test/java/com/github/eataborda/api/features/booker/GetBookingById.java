@@ -1,8 +1,7 @@
-package com.github.eataborda.api.features.exampleapi;
+package com.github.eataborda.api.features.booker;
 
-import com.github.eataborda.api.common.Logger;
 import com.github.eataborda.api.enums.StatusCode;
-import com.github.eataborda.api.steps.APISteps;
+import com.github.eataborda.api.steps.BookingSteps;
 import io.restassured.response.Response;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
@@ -14,12 +13,12 @@ import org.junit.runners.MethodSorters;
 
 @RunWith(SerenityRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class GetBookingInformationById {
+public class GetBookingById {
     private static int bookingId;
-    private static APISteps setupApiSteps = new APISteps();
+    private static BookingSteps setupApiSteps = new BookingSteps();
 
     @Steps
-    APISteps apiSteps;
+    BookingSteps apiSteps;
 
     @BeforeClass
     public static void setupValues() {
@@ -28,8 +27,8 @@ public class GetBookingInformationById {
     }
 
     @Test
-    public void getBookingInformationById() {
-        Response response = apiSteps.getBookingInformationById(bookingId);
+    public void getBookingById() {
+        Response response = apiSteps.getBookingById(bookingId);
         apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), response);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(response);
         apiSteps.validateResponseBodyHasExpectedFields(response);
