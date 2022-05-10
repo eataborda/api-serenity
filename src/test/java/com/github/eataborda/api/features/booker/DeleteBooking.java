@@ -47,4 +47,5 @@ public class DeleteBooking {
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(responseAfterDeleteingBooking);
         apiSteps.validateResponseHeadersHasExpectedFields(responseAfterDeleteingBooking);
     }
+
 }
