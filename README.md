@@ -1,3 +1,4 @@
+[![automation-api-test-run](https://github.com/eataborda/serenity-gradle-java-junit/actions/workflows/automation-api-test-run.yml/badge.svg)](https://github.com/eataborda/serenity-gradle-java-junit/actions/workflows/automation-api-test-run.yml)
 [![Gradle](https://img.shields.io/badge/Gradle-7.4.2-blue)](https://gradle.org/releases/)
 [![Gradle Plugin Portal](https://img.shields.io/badge/serenity.gralde.plugin-3.2.4-blue)](https://plugins.gradle.org/plugin/net.serenity-bdd.serenity-gradle-plugin/3.2.4)
 
@@ -20,11 +21,20 @@ $ cd ./serenity-gradle-java-junit
 ```
 
 ## Run automation
-- Run all tests:
+- Run all tests on the src:
 ```
 $ ./gradlew
 ```
-- Run specific tests:
+- Run all tests inside class using junit tags (@WithTagValuesOf):
 ```
-$ ./gradlew tags
+$ ./gradlew -Dtags="regression"
 ```
+- Run an specific test method (@Test) inside class using junit tags (@WithTag):
+```
+$ ./gradlew -Dtags="status_code:200"
+```
+In this way you can use the following tags depending on the tests you need to run:
+
+smoke, workflow, delete_method, get_method, health_check, patch_method, post_method, put_method,
+status_code:all, status_code:200, status_code:201, status_code:400, status_code:403, status_code:404,
+status_code:405, status_code:500

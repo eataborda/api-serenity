@@ -1,4 +1,4 @@
-name: gatling-test-run
+name: automation-api-test-run
 on:
   push:
     paths:
