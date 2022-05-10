@@ -1,11 +1,11 @@
 package com.github.eataborda.api.features.booker;
 
 import com.github.eataborda.api.common.Logger;
+import com.github.eataborda.api.enums.Comments;
 import com.github.eataborda.api.enums.StatusCode;
 import com.github.eataborda.api.steps.BookingSteps;
 import io.restassured.response.Response;
 import net.serenitybdd.junit.runners.SerenityRunner;
-import net.thucydides.core.annotations.Narrative;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.annotations.WithTag;
 import net.thucydides.core.annotations.WithTagValuesOf;
@@ -49,7 +49,7 @@ public class StatusCodeValidation {
     public void statusCode201Validation() {
         Response statusCodeResponse = apiSteps.postCreateBooking();
         apiSteps.validateStatusCode(StatusCode.SC_201.getValue(), statusCodeResponse);
-        l.log("A successful post request should return status code 201 according to the following source: https://developer.mozilla.org/es/docs/Web/HTTP/Status/201");
+        l.log(Comments.SUCCESS_POST.getValue());
     }
 
     @Test
@@ -86,5 +86,4 @@ public class StatusCodeValidation {
         Response response = apiSteps.postCreateBookingWithMalformedBody(StatusCode.SC_500.getValue());
         apiSteps.validateStatusCode(StatusCode.SC_500.getValue(), response);
     }
-
 }

@@ -1,5 +1,7 @@
 package com.github.eataborda.api.features.booker;
 
+import com.github.eataborda.api.common.Logger;
+import com.github.eataborda.api.enums.Comments;
 import com.github.eataborda.api.enums.StatusCode;
 import com.github.eataborda.api.steps.BookingSteps;
 import io.restassured.response.Response;
@@ -11,7 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(SerenityRunner.class)
-@WithTagValuesOf({"regression", "workflow" })
+@WithTagValuesOf({"regression", "workflow"})
 public class WorkFlow {
     private static String token;
     private static int bookingId;
@@ -19,6 +21,9 @@ public class WorkFlow {
 
     @Steps
     BookingSteps apiSteps;
+
+    @Steps
+    Logger l;
 
     @BeforeClass
     public static void setupValues() {
@@ -30,12 +35,14 @@ public class WorkFlow {
         //Ping
         Response pingResponse = apiSteps.getHealthCheck();
         apiSteps.validateStatusCode(StatusCode.SC_201.getValue(), pingResponse);
+        l.log(Comments.SUCCESS_HEALTH_CHECK.getValue());
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(pingResponse);
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(pingResponse);
         apiSteps.validateResponseHeadersHasExpectedFields(pingResponse);
         //Create booking
         Response createBookingResponse = apiSteps.postCreateBooking();
         apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), createBookingResponse);
+        l.log(Comments.SUCCESS_POST.getValue());
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(createBookingResponse);
         apiSteps.validatePostCreateBookingResponseBodyHasExpectedFields(createBookingResponse);
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(createBookingResponse);
@@ -82,6 +89,7 @@ public class WorkFlow {
         //Delete booking
         Response deleteBookingResponse = apiSteps.deleteBooking(bookingId, token);
         apiSteps.validateStatusCode(StatusCode.SC_201.getValue(), deleteBookingResponse);
+        l.log(Comments.SUCCESS_DELETE.getValue());
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(deleteBookingResponse);
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(deleteBookingResponse);
         apiSteps.validateResponseHeadersHasExpectedFields(deleteBookingResponse);

@@ -1,6 +1,5 @@
 package com.github.eataborda.api.steps;
 
-import com.github.eataborda.api.common.Logger;
 import com.github.eataborda.api.enums.HeaderValues;
 import com.github.eataborda.api.enums.HeadersNames;
 import com.github.eataborda.api.enums.BodyNames;
@@ -11,7 +10,6 @@ import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
 import net.thucydides.core.annotations.Step;
-import net.thucydides.core.annotations.Steps;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Assert;
 
@@ -23,11 +21,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BookingSteps {
-    private ServiceManager manager = new ServiceManager();
+    private final ServiceManager manager = new ServiceManager();
     private SoftAssertions assertion;
-
-    @Steps
-    Logger l;
 
     @Step("Get session token")
     public String getSessionToken() {
@@ -145,9 +140,9 @@ public class BookingSteps {
         validateResponseHeaderExpectedFieldValueString(HeadersNames.CONNECTION.getValue(), HeaderValues.KEEP_ALIVE.getValue(), response);
         validateResponseHeaderExpectedFieldValueString(HeadersNames.X_POWERED_BY.getValue(), HeaderValues.EXPRESS.getValue(), response);
         String jsonBody = response.getBody().asString();
-        if(jsonBody.equals("Created")||jsonBody.equals("Not Found")){
+        if (jsonBody.equals("Created") || jsonBody.equals("Not Found")) {
             validateResponseHeaderExpectedFieldValueString(HeadersNames.CONTENT_TYPE.getValue(), HeaderValues.TEXT_PLAIN_CHARSET_UTF_8.getValue(), response);
-        }else{
+        } else {
             validateResponseHeaderExpectedFieldValueString(HeadersNames.CONTENT_TYPE.getValue(), HeaderValues.APPLICATION_JSON_CHARSET_UTF_8.getValue(), response);
         }
         validateResponseHeaderExpectedFieldValueInteger(HeadersNames.CONTENT_LENGTH.getValue(), response.getHeader(HeadersNames.CONTENT_LENGTH.getValue()));
@@ -184,7 +179,7 @@ public class BookingSteps {
     @Step("Header - Validate field {0} = {1}")
     public void validateResponseHeaderExpectedFieldValueNotNull(String fieldName, String expectedValue, Response response) {
         String currentValue = response.getHeader(fieldName);
-        assertion.assertThat(currentValue).as(fieldName + " field doesn't have the expected value: " + currentValue).isNotNull();
+        assertion.assertThat(currentValue).as(fieldName + " field doesn't have the expected value: " + expectedValue).isNotNull();
     }
 
     public boolean isValidResponseHeaderDate(String dateString) {
@@ -282,7 +277,7 @@ public class BookingSteps {
     }
 
     @Step("Update booking without authentication header")
-    public Response putUpdateBookingAuthenticationHeader(int bookingId, String sessionToken){
+    public Response putUpdateBookingAuthenticationHeader(int bookingId, String sessionToken) {
         return manager.putUpdateBookingAuthenticationHeader(bookingId, sessionToken);
     }
 
@@ -292,17 +287,17 @@ public class BookingSteps {
     }
 
     @Step("Delete booking by id = {0}")
-    public Response deleteBooking(int bookingId, String sessionToken){
+    public Response deleteBooking(int bookingId, String sessionToken) {
         return manager.deleteBooking(bookingId, sessionToken);
     }
 
     @Step("Get service health check")
-    public Response getHealthCheck(){
+    public Response getHealthCheck() {
         return manager.getHealthCheck();
     }
 
     @Step("Create booking with malformed body - Status code: {0}")
-    public Response postCreateBookingWithMalformedBody(int expectedStatusCode){
+    public Response postCreateBookingWithMalformedBody(int expectedStatusCode) {
         return manager.postCreateBookingWithMalformedBody(expectedStatusCode);
     }
 }

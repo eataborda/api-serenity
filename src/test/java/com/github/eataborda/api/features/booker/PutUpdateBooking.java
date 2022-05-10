@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(SerenityRunner.class)
-@WithTagValuesOf({"regression", "smoke", "put_method" })
+@WithTagValuesOf({"regression", "smoke", "put_method"})
 public class PutUpdateBooking {
     private static String token;
     private static int bookingId;

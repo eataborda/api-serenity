@@ -1,5 +1,7 @@
 package com.github.eataborda.api.features.booker;
 
+import com.github.eataborda.api.common.Logger;
+import com.github.eataborda.api.enums.Comments;
 import com.github.eataborda.api.enums.StatusCode;
 import com.github.eataborda.api.steps.BookingSteps;
 import io.restassured.response.Response;
@@ -11,7 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(SerenityRunner.class)
-@WithTagValuesOf({"regression", "smoke", "delete_method" })
+@WithTagValuesOf({"regression", "smoke", "delete_method"})
 public class DeleteBooking {
     private static String token;
     private static int bookingId;
@@ -19,6 +21,9 @@ public class DeleteBooking {
 
     @Steps
     BookingSteps apiSteps;
+
+    @Steps
+    Logger l;
 
     @BeforeClass
     public static void setupValues() {
@@ -31,11 +36,11 @@ public class DeleteBooking {
     public void deleteBooking() {
         Response response = apiSteps.deleteBooking(bookingId, token);
         apiSteps.validateStatusCode(StatusCode.SC_201.getValue(), response);
-        //Dejar comentario del status code que debería ser
+        l.log(Comments.SUCCESS_DELETE.getValue());
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(response);
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(response);
         apiSteps.validateResponseHeadersHasExpectedFields(response);
-        //Validaciones post delete, se espera que el booking no exista y retorne otra cosa
+        //Validate booking not found
         Response responseAfterDeleteingBooking = apiSteps.getBookingById(bookingId);
         apiSteps.validateStatusCode(StatusCode.SC_404.getValue(), responseAfterDeleteingBooking);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(responseAfterDeleteingBooking);

@@ -1,5 +1,7 @@
 package com.github.eataborda.api.features.booker;
 
+import com.github.eataborda.api.common.Logger;
+import com.github.eataborda.api.enums.Comments;
 import com.github.eataborda.api.enums.StatusCode;
 import com.github.eataborda.api.steps.BookingSteps;
 import io.restassured.response.Response;
@@ -10,16 +12,20 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(SerenityRunner.class)
-@WithTagValuesOf({"regression", "smoke", "post_method" })
+@WithTagValuesOf({"regression", "smoke", "post_method"})
 public class PostCreateBooking {
 
     @Steps
     BookingSteps apiSteps;
 
+    @Steps
+    Logger l;
+
     @Test
     public void postCreateBooking() {
         Response response = apiSteps.postCreateBooking();
         apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), response);
+        l.log(Comments.SUCCESS_POST.getValue());
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(response);
         apiSteps.validatePostCreateBookingResponseBodyHasExpectedFields(response);
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(response);

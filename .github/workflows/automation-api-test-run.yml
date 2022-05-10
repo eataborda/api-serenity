@@ -5,6 +5,10 @@ on:
       - 'src/test/**'
   schedule:
     - cron: '0 8 * * 1,4'
+env:
+  USER: ${{ secrets.USER }}
+  PASSWORD: ${{ secrets.PASSWORD }}
+  AUTHORIZATION: ${{ secrets.AUTHORIZATION }}
 jobs:
   test-run:
     runs-on: ubuntu-latest

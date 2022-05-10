@@ -1,9 +1,6 @@
 package com.github.eataborda.api.service;
 
 import com.github.eataborda.api.enums.*;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import net.serenitybdd.rest.SerenityRest;
@@ -12,8 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ServiceManager {
-    private final String user = "admin";
-    private final String password = "password123";
+    private final String user = getEnvironmentVariable("USER");
+    private final String password = getEnvironmentVariable("PASSWORD");
+    private final String authorization = getEnvironmentVariable("AUTHORIZATION");
 
     public String getSessionToken() {
         RequestSpecification request = SerenityRest.given();
@@ -90,7 +88,7 @@ public class ServiceManager {
             authenticationHeader.put("value", "token=" + sessionToken);
         } else {
             authenticationHeader.put("key", HeadersNames.AUTHORIZATION.getValue());
-            authenticationHeader.put("value", "Basic YWRtaW46cGFzc3dvcmQxMjM=");
+            authenticationHeader.put("value", "Basic " + authorization);
         }
         return authenticationHeader;
     }
@@ -136,9 +134,9 @@ public class ServiceManager {
     public Response postCreateBookingWithMalformedBody(int expectedStatusCode) {
         RequestSpecification request = SerenityRest.given();
         request.headers(HeadersNames.CONTENT_TYPE.getValue(), HeaderValues.APPLICATION_JSON.getValue(), HeadersNames.ACCEPT.getValue(), HeaderValues.APPLICATION_JSON.getValue());
-        if(expectedStatusCode==StatusCode.SC_400.getValue()){
+        if (expectedStatusCode == StatusCode.SC_400.getValue()) {
             request.body(getMalformedRequestBodyStatusCode400());
-        } else if(expectedStatusCode==StatusCode.SC_500.getValue()){
+        } else if (expectedStatusCode == StatusCode.SC_500.getValue()) {
             request.body(getMalformedRequestBodyStatusCode500());
         }
         return request.post(URLs.BASE.getValue());
@@ -154,7 +152,11 @@ public class ServiceManager {
         return reqBody;
     }
 
-    public String getMalformedRequestBodyStatusCode400(){
+    public String getMalformedRequestBodyStatusCode400() {
         return new String("{\"firstname\":\"Jorge\",\"lastname\":\"Fisher\",\"totalprice\":420,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2022-04-24\",\"checkout\":\"2023-04-24\"},\"additionalneeds\":%}");
+    }
+
+    private String getEnvironmentVariable(String key) {
+        return System.getenv(key);
     }
 }

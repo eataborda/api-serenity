@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(SerenityRunner.class)
-@WithTagValuesOf({"regression", "smoke", "get_method" })
+@WithTagValuesOf({"regression", "smoke", "get_method"})
 public class GetBookingIdListTest {
 
     @Steps

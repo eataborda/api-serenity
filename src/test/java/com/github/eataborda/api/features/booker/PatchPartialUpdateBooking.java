@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(SerenityRunner.class)
-@WithTagValuesOf({"regression", "patch_method" })
+@WithTagValuesOf({"regression", "patch_method"})
 public class PatchPartialUpdateBooking {
     private static String token;
     private static int bookingId;
@@ -35,7 +35,7 @@ public class PatchPartialUpdateBooking {
         apiSteps.validateResponseBodyHasExpectedFields(response);
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(response);
         apiSteps.validateResponseHeadersHasExpectedFields(response);
-        //Validaciones despues de actualizar parcialmente un booking
+        //Validate partial updated fields
         Response responseAfterPartialUpdateBooking = apiSteps.getBookingById(bookingId);
         apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), responseAfterPartialUpdateBooking);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(responseAfterPartialUpdateBooking);
