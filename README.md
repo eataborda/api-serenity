@@ -9,7 +9,7 @@ on the behavior of the service for practice purposes
 
 Contains:
 - Basic build.gradle config
-- Basic API automation with general validations made for the different request methods: POST, GET, PUT, PATCH, DELETE
+- Basic API automation with general validations for the following request methods: POST, GET, PUT, PATCH, DELETE
 
 ## Use sample project locally
 - Verify that you have `Git`
@@ -35,6 +35,6 @@ $ ./gradlew -Dtags="status_code:200"
 ```
 In this way you can use the following tags depending on the tests you need to run:
 
-smoke, workflow, delete_method, get_method, health_check, patch_method, post_method, put_method,
+smoke, workflow, delete_method, get_method, patch_method, post_method, put_method, health_check,
 status_code:all, status_code:200, status_code:201, status_code:400, status_code:403, status_code:404,
 status_code:405, status_code:500
