@@ -27,7 +27,7 @@ $  export USER=(userValue) PASSWORD=(passwordValue) AUTHORIZATION=(authValue)
 ```
 Values can be consulted on the following restul-booker [apidoc](https://restful-booker.herokuapp.com/apidoc/index.html)
 
-### Run automation
+### Run tests
 - Run all tests on the src:
 ```
 $ ./gradlew
