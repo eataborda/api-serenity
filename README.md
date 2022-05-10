@@ -3,9 +3,9 @@
 [![Gradle Plugin Portal](https://img.shields.io/badge/serenity.gralde.plugin-3.2.4-blue)](https://plugins.gradle.org/plugin/net.serenity-bdd.serenity-gradle-plugin/3.2.4)
 
 # Basic API automation 
-A basic API automation test using Java + Junit + Serenity + Gradle
-based on the Restful-booker service that introduce intentionally errors
-on the behavior of the service for practice purposes
+A basic API automation using Java + Junit + Serenity + Gradle
+used to test the [Restful-Booker](https://restful-booker.herokuapp.com/) service created by Mark Winteringham, current service introduce intentionally errors
+on the behavior of the service for study purposes and practice API tests
 
 Contains:
 - Basic build.gradle config
@@ -19,8 +19,15 @@ Contains:
 $ gh repo clone eataborda/serenity-gradle-java-junit
 $ cd ./serenity-gradle-java-junit
 ```
+### Before run
+Automation was setup to get some environment variables from repository to execute the tests on the workflows,
+to execute the tests locally is necessary to set first the following environment variables:
+```
+$  export USER=(userValue) PASSWORD=(passwordValue) AUTHORIZATION=(authValue)
+```
+Values can be consulted on the following restul-booker [apidoc](https://restful-booker.herokuapp.com/apidoc/index.html)
 
-## Run automation
+### Run automation
 - Run all tests on the src:
 ```
 $ ./gradlew
