@@ -51,7 +51,7 @@ public class ServiceManager {
         reqBody.put(BodyNames.LAST_NAME.getValue(), "Hubble");
         reqBody.put(BodyNames.TOTAL_PRICE.getValue(), 170);
         reqBody.put(BodyNames.DEPOSIT_PAID.getValue(), true);
-        reqBody.put(BodyNames.ADDITIONAL_NEEDS.getValue(), "Adventure!");
+        reqBody.put(BodyNames.ADDITIONAL_NEEDS.getValue(), "Learning and sharing knowledge!");
         reqBody.put(BodyNames.BOOKING_DATES.getValue(), bookingDates);
 
         return reqBody;
@@ -71,11 +71,11 @@ public class ServiceManager {
         bookingDates.put(BodyNames.CHECKIN.getValue(), "2022-05-04");
         bookingDates.put(BodyNames.CHECKOUT.getValue(), "2022-06-05");
         Map<String, Object> reqBody = new HashMap<>();
-        reqBody.put(BodyNames.FIRST_NAME.getValue(), "Edward");
-        reqBody.put(BodyNames.LAST_NAME.getValue(), "Hunter");
+        reqBody.put(BodyNames.FIRST_NAME.getValue(), "Albert");
+        reqBody.put(BodyNames.LAST_NAME.getValue(), "Einstein");
         reqBody.put(BodyNames.TOTAL_PRICE.getValue(), 190);
         reqBody.put(BodyNames.DEPOSIT_PAID.getValue(), true);
-        reqBody.put(BodyNames.ADDITIONAL_NEEDS.getValue(), "Adventure Time!");
+        reqBody.put(BodyNames.ADDITIONAL_NEEDS.getValue(), "Understand the nature of things!");
         reqBody.put(BodyNames.BOOKING_DATES.getValue(), bookingDates);
 
         return reqBody;
@@ -112,8 +112,8 @@ public class ServiceManager {
 
     public Map<String, Object> getPartialyUpdatedRequestBody() {
         Map<String, Object> bookingValuesToUpdate = new HashMap<>();
-        bookingValuesToUpdate.put(BodyNames.FIRST_NAME.getValue(), "Alexander");
-        bookingValuesToUpdate.put(BodyNames.LAST_NAME.getValue(), "Marin");
+        bookingValuesToUpdate.put(BodyNames.FIRST_NAME.getValue(), "Nikola");
+        bookingValuesToUpdate.put(BodyNames.LAST_NAME.getValue(), "Tesla");
         return bookingValuesToUpdate;
     }
 
@@ -144,16 +144,16 @@ public class ServiceManager {
 
     public Map<String, Object> getMalformedRequestBodyStatusCode500() {
         Map<String, Object> reqBody = new HashMap<>();
-        reqBody.put(BodyNames.FIRST_NAME.getValue(), "Jorge");
+        reqBody.put(BodyNames.FIRST_NAME.getValue(), "George");
         reqBody.put(BodyNames.LAST_NAME.getValue(), "Fisher");
         reqBody.put(BodyNames.TOTAL_PRICE.getValue(), 190);
         reqBody.put(BodyNames.DEPOSIT_PAID.getValue(), true);
-        reqBody.put(BodyNames.ADDITIONAL_NEEDS.getValue(), "Fisher Time!");
+        reqBody.put(BodyNames.ADDITIONAL_NEEDS.getValue(), "Fish all day!");
         return reqBody;
     }
 
     public String getMalformedRequestBodyStatusCode400() {
-        return new String("{\"firstname\":\"Jorge\",\"lastname\":\"Fisher\",\"totalprice\":420,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2022-04-24\",\"checkout\":\"2023-04-24\"},\"additionalneeds\":%}");
+        return new String("{\"firstname\":\"George\",\"lastname\":\"Fisher\",\"totalprice\":420,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2022-04-24\",\"checkout\":\"2023-04-24\"},\"additionalneeds\":%}");
     }
 
     private String getEnvironmentVariable(String key) {

@@ -40,12 +40,12 @@ public class DeleteBooking {
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(response);
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(response);
         apiSteps.validateResponseHeadersHasExpectedFields(response);
-        //Validate booking not found
-        Response responseAfterDeleteingBooking = apiSteps.getBookingById(bookingId);
-        apiSteps.validateStatusCode(StatusCode.SC_404.getValue(), responseAfterDeleteingBooking);
-        apiSteps.validateResponseBodyIsNotNullAndNotEmpty(responseAfterDeleteingBooking);
-        apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(responseAfterDeleteingBooking);
-        apiSteps.validateResponseHeadersHasExpectedFields(responseAfterDeleteingBooking);
+        //Verify that the booking does not exist after deletion
+        Response responseAfterDeletingBooking = apiSteps.getBookingById(bookingId);
+        apiSteps.validateStatusCode(StatusCode.SC_404.getValue(), responseAfterDeletingBooking);
+        apiSteps.validateResponseBodyIsNotNullAndNotEmpty(responseAfterDeletingBooking);
+        apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(responseAfterDeletingBooking);
+        apiSteps.validateResponseHeadersHasExpectedFields(responseAfterDeletingBooking);
     }
 
 }

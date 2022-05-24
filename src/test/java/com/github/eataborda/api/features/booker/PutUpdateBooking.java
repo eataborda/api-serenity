@@ -35,7 +35,7 @@ public class PutUpdateBooking {
         apiSteps.validateResponseBodyHasExpectedFields(response);
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(response);
         apiSteps.validateResponseHeadersHasExpectedFields(response);
-        //Validations after update booking
+        //Verify that the changes take effect after the update
         Response responseAfterUpdateBooking = apiSteps.getBookingById(bookingId);
         apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), responseAfterUpdateBooking);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(responseAfterUpdateBooking);

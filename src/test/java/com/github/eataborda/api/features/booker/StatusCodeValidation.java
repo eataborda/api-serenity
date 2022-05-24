@@ -17,7 +17,7 @@ import org.junit.runners.MethodSorters;
 
 @RunWith(SerenityRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@WithTagValuesOf({"regression", "status_code:all" })
+@WithTagValuesOf({"regression", "status_code:all"})
 public class StatusCodeValidation {
     private static String token;
     private static int bookingId;

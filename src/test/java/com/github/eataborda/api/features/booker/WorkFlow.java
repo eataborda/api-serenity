@@ -32,7 +32,7 @@ public class WorkFlow {
 
     @Test
     public void workflow() {
-        //Ping
+        //Get service status
         Response pingResponse = apiSteps.getHealthCheck();
         apiSteps.validateStatusCode(StatusCode.SC_201.getValue(), pingResponse);
         l.log(Comments.SUCCESS_HEALTH_CHECK.getValue());
@@ -47,7 +47,7 @@ public class WorkFlow {
         apiSteps.validatePostCreateBookingResponseBodyHasExpectedFields(createBookingResponse);
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(createBookingResponse);
         apiSteps.validateResponseHeadersHasExpectedFields(createBookingResponse);
-        //Validate booking exists
+        //Verify that the booking exists after call the create post method
         bookingId = apiSteps.getIdFromCreatedBooking(createBookingResponse);
         Response responseAfterCreateBooking = apiSteps.getBookingById(bookingId);
         apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), responseAfterCreateBooking);
@@ -63,7 +63,7 @@ public class WorkFlow {
         apiSteps.validateResponseBodyHasExpectedFields(updateBookingResponse);
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(updateBookingResponse);
         apiSteps.validateResponseHeadersHasExpectedFields(updateBookingResponse);
-        //Validate updated fields
+        //Verify that the changes take effect after the update
         Response responseAfterUpdateBooking = apiSteps.getBookingById(bookingId);
         apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), responseAfterUpdateBooking);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(responseAfterUpdateBooking);
@@ -78,7 +78,7 @@ public class WorkFlow {
         apiSteps.validateResponseBodyHasExpectedFields(partialUpdateResponse);
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(partialUpdateResponse);
         apiSteps.validateResponseHeadersHasExpectedFields(partialUpdateResponse);
-        //Validate partial updated fields
+        //Verify that the changes take effect after the partial update
         Response responseAfterPartialUpdateBooking = apiSteps.getBookingById(bookingId);
         apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), responseAfterPartialUpdateBooking);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(responseAfterPartialUpdateBooking);
@@ -93,7 +93,7 @@ public class WorkFlow {
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(deleteBookingResponse);
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(deleteBookingResponse);
         apiSteps.validateResponseHeadersHasExpectedFields(deleteBookingResponse);
-        //Validate booking not found
+        //Verify that the booking does not exist after deletion
         Response responseAfterDeleteBooking = apiSteps.getBookingById(bookingId);
         apiSteps.validateStatusCode(StatusCode.SC_404.getValue(), responseAfterDeleteBooking);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(responseAfterDeleteBooking);

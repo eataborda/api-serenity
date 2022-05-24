@@ -30,7 +30,7 @@ public class PostCreateBooking {
         apiSteps.validatePostCreateBookingResponseBodyHasExpectedFields(response);
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(response);
         apiSteps.validateResponseHeadersHasExpectedFields(response);
-        //Steps after verify the post call
+        //Verify that the booking exists after call the create post method
         Response responseAfterCreateBooking = apiSteps.getBookingById(apiSteps.getIdFromCreatedBooking(response));
         apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), responseAfterCreateBooking);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(responseAfterCreateBooking);

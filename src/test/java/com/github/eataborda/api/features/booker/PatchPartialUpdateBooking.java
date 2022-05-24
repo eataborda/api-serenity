@@ -35,7 +35,7 @@ public class PatchPartialUpdateBooking {
         apiSteps.validateResponseBodyHasExpectedFields(response);
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(response);
         apiSteps.validateResponseHeadersHasExpectedFields(response);
-        //Validate partial updated fields
+        //Verify that the changes take effect after the partial update
         Response responseAfterPartialUpdateBooking = apiSteps.getBookingById(bookingId);
         apiSteps.validateStatusCode(StatusCode.SC_200.getValue(), responseAfterPartialUpdateBooking);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(responseAfterPartialUpdateBooking);
