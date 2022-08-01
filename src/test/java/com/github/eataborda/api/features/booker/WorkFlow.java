@@ -93,7 +93,7 @@ public class WorkFlow {
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(deleteBookingResponse);
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(deleteBookingResponse);
         apiSteps.validateResponseHeadersHasExpectedFields(deleteBookingResponse);
-        //Verify that the booking does not exist after deletion
+        //Verify that the booking does not exist after deletion update
         Response responseAfterDeleteBooking = apiSteps.getBookingById(bookingId);
         apiSteps.validateStatusCode(StatusCode.SC_404.getValue(), responseAfterDeleteBooking);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(responseAfterDeleteBooking);
