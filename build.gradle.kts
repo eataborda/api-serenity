@@ -28,10 +28,7 @@ tasks.test {
 }
 
 tasks.withType<Test> {
-    systemProperty("tags", System.getProperty("tags"))
-    systemProperty("USER", System.getProperty("USER"))
-    systemProperty("PASSWORD", System.getProperty("PASSWORD"))
-    systemProperty("AUTHORIZATION", System.getProperty("AUTHORIZATION"))
+    systemProperties(System.getProperties().toMap() as Map<String,Object>)
 }
 
 defaultTasks ("clean", "test", "aggregate")
