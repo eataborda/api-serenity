@@ -28,7 +28,10 @@ tasks.test {
 }
 
 tasks.withType<Test> {
-    systemProperties = System.getProperties() as Map<String, String>
+    systemProperty("tags", System.getProperty("tags"))
+    systemProperty("USER", System.getProperty("USER"))
+    systemProperty("PASSWORD", System.getProperty("PASSWORD"))
+    systemProperty("AUTHORIZATION", System.getProperty("AUTHORIZATION"))
 }
 
 defaultTasks ("clean", "test", "aggregate")

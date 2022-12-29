@@ -15,8 +15,6 @@ public class ServiceManager {
 
     public String getSessionToken() {
         RequestSpecification request = SerenityRest.given();
-        System.out.println(user+"--------------------");
-        System.out.println(password+"--------------------");
         Map<String, String> requestBody = Map.of(BodyNames.USERNAME.getValue(), user, BodyNames.PASSWORD.getValue(), password);
         request.header(HeadersNames.CONTENT_TYPE.getValue(), HeaderValues.APPLICATION_JSON.getValue(), HeadersNames.ACCEPT.getValue(), HeaderValues.APPLICATION_JSON.getValue());
         request.body(requestBody);
@@ -161,5 +159,4 @@ public class ServiceManager {
     private String getEnvironmentVariable(String key) {
         return System.getenv(key);
     }
-
 }
