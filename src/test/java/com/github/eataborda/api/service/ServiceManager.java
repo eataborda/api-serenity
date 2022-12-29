@@ -159,5 +159,4 @@ public class ServiceManager {
     private String getEnvironmentVariable(String key) {
         return System.getenv(key);
     }
-
 }
