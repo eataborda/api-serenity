@@ -28,7 +28,7 @@ tasks.test {
 }
 
 tasks.withType<Test> {
-    systemProperties(System.getProperties().toMap() as Map<String,Object>)
+    systemProperties = System.getProperties() as Map<String, Any>
 }
 
 defaultTasks ("clean", "test", "aggregate")
