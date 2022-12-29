@@ -23,7 +23,7 @@ $ cd ./serenity-gradle-java-junit
 Automation was setup to get some environment variables from repository to execute the tests on the workflows,
 to execute the tests locally is necessary to set first the following environment variables:
 ```
-$  export USER=(userValue) PASSWORD=(passwordValue) AUTHORIZATION=(authValue)
+$  export USER=admin PASSWORD=password123
 ```
 Values can be consulted on the following restul-booker [apidoc](https://restful-booker.herokuapp.com/apidoc/index.html)
 
