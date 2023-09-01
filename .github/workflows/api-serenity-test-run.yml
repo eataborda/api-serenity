@@ -1,4 +1,4 @@
-name: automation-api-test-run
+name: api-serenity-test-run
 on:
   push:
     paths:
@@ -18,6 +18,6 @@ jobs:
       - name: 'Automation api test result'
         uses: actions/upload-artifact@v2
         with:
-          name: automation-api-test-result
+          name: api-serenity-test-result
           path: target/site
           retention-days: 3
