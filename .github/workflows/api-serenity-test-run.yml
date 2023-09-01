@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: ./gradlew
-      - name: 'Automation api test result'
+      - name: 'api serenity test result'
         uses: actions/upload-artifact@v3
         with:
           name: api-serenity-test-result
