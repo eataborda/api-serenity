@@ -8,6 +8,8 @@ plugins {
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(20))
+        vendor = JvmVendorSpec.ORACLE
+        implementation = JvmImplementation.VENDOR_SPECIFIC
     }
 }
 
