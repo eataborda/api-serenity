@@ -1,5 +1,5 @@
 plugins {
-    id("net.serenity-bdd.serenity-gradle-plugin") version "3.9.8"
+    id("net.serenity-bdd.serenity-gradle-plugin") version "4.1.14"
     `java-library`
     eclipse
     idea
@@ -7,7 +7,7 @@ plugins {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(22))
     }
 }
 
@@ -37,10 +37,10 @@ tasks.withType<Test> {
 }
 
 dependencies {
-    testImplementation("net.serenity-bdd:serenity-core:3.9.8")
-    testImplementation("net.serenity-bdd:serenity-junit:3.9.8")
-    testImplementation("net.serenity-bdd:serenity-rest-assured:3.9.8")
+    testImplementation("net.serenity-bdd:serenity-core:4.1.14")
+    testImplementation("net.serenity-bdd:serenity-junit:4.1.14")
+    testImplementation("net.serenity-bdd:serenity-rest-assured:4.1.14")
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.assertj:assertj-core:3.24.2")
-    testImplementation("org.slf4j:slf4j-simple:2.0.5")
+    testImplementation("org.assertj:assertj-core:3.26.3")
+    testImplementation("org.slf4j:slf4j-simple:2.0.16")
 }

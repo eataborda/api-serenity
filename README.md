@@ -1,6 +1,6 @@
 [![test-run](https://github.com/eataborda/api-serenity/actions/workflows/api-serenity-test-run.yml/badge.svg)](https://github.com/eataborda/api-serenity/actions/workflows/api-serenity-test-run.yml)
-[![Gradle](https://img.shields.io/badge/Gradle-8.3-blue)](https://gradle.org/releases/)
-[![Gradle Plugin Portal](https://img.shields.io/badge/serenity.gradle.plugin-3.9.8-blue)](https://plugins.gradle.org/plugin/net.serenity-bdd.serenity-gradle-plugin/3.9.8)
+[![Gradle](https://img.shields.io/badge/Gradle-8.9-blue)](https://gradle.org/releases/)
+[![Gradle Plugin Portal](https://img.shields.io/badge/serenity.gradle.plugin-4.1.14-blue)](https://plugins.gradle.org/plugin/net.serenity-bdd.serenity-gradle-plugin/3.9.8)
 
 # Basic API automation 
 A basic API automation using Java + Junit + Serenity + Gradle

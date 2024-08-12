@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
-import net.thucydides.core.annotations.Step;
+import net.serenitybdd.annotations.Step;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Assert;
 
@@ -135,8 +135,9 @@ public class BookingSteps {
     @Step("Validate expected response header fields")
     public void validateResponseHeadersHasExpectedFields(Response response) {
         assertion = new SoftAssertions();
-        validateHeaderSize(response.getHeaders().size(), 8);
+        validateHeaderSize(response.getHeaders().size(), 11);
         validateResponseHeaderExpectedFieldValueString(HeadersNames.SERVER.getValue(), HeaderValues.COWBOY.getValue(), response);
+        validateResponseHeaderExpectedFieldValueString(HeadersNames.NEL.getValue(), HeaderValues.NEL_VALUE.getValue(), response);
         validateResponseHeaderExpectedFieldValueString(HeadersNames.CONNECTION.getValue(), HeaderValues.KEEP_ALIVE.getValue(), response);
         validateResponseHeaderExpectedFieldValueString(HeadersNames.X_POWERED_BY.getValue(), HeaderValues.EXPRESS.getValue(), response);
         String jsonBody = response.getBody().asString();
@@ -231,16 +232,14 @@ public class BookingSteps {
         ResponseBody responseBody = response.getBody();
         assertion = new SoftAssertions();
         switch (jsonUsedOnServiceCall) {
-            case "create":
-                validateResponseBodyHasSameFieldValuesUsedOnRequestBodyForAllFields(manager.getRequestBody(), responseBody);
-                break;
-            case "update":
-                validateResponseBodyHasSameFieldValuesUsedOnRequestBodyForAllFields(manager.getUpdatedRequestBody(), responseBody);
-                break;
-            case "partialUpdate":
-                validateResponseBodyHasSameFieldValuesUsedOnRequestBodyForSpecificFields(manager.getPartialyUpdatedRequestBody(), responseBody);
-                break;
-            default:
+            case "create" ->
+                    validateResponseBodyHasSameFieldValuesUsedOnRequestBodyForAllFields(manager.getRequestBody(), responseBody);
+            case "update" ->
+                    validateResponseBodyHasSameFieldValuesUsedOnRequestBodyForAllFields(manager.getUpdatedRequestBody(), responseBody);
+            case "partialUpdate" ->
+                    validateResponseBodyHasSameFieldValuesUsedOnRequestBodyForSpecificFields(manager.getPartialyUpdatedRequestBody(), responseBody);
+            default -> {
+            }
         }
         assertion.assertAll();
     }

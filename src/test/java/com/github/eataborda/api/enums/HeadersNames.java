@@ -7,6 +7,7 @@ public enum HeadersNames {
     CONTENT_TYPE("Content-Type"),
     CONTENT_LENGTH("Content-Length"),
     SERVER("Server"),
+    NEL("Nel"),
     CONNECTION("Connection"),
     X_POWERED_BY("X-Powered-By"),
     ETAG("Etag"),

@@ -13,10 +13,17 @@ jobs:
   test-run:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: ./gradlew
-      - name: 'api serenity test result'
-        uses: actions/upload-artifact@v3
+      - uses: actions/checkout@v4
+      - name: Set up JDK 22 for x64
+        uses: actions/setup-java@v4
+        with:
+          java-version: '22'
+          distribution: 'temurin'
+          architecture: x64
+      - name: 'Run API tests'
+        run: ./gradlew
+      - name: 'API serenity test result'
+        uses: actions/upload-artifact@v4
         with:
           name: api-serenity-test-result
           path: target/site

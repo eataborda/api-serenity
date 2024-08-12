@@ -5,10 +5,11 @@ import com.github.eataborda.api.enums.Comments;
 import com.github.eataborda.api.enums.StatusCode;
 import com.github.eataborda.api.steps.BookingSteps;
 import io.restassured.response.Response;
+import net.serenitybdd.annotations.Steps;
+import net.serenitybdd.annotations.WithTag;
+import net.serenitybdd.annotations.WithTagValuesOf;
 import net.serenitybdd.junit.runners.SerenityRunner;
-import net.thucydides.core.annotations.Steps;
-import net.thucydides.core.annotations.WithTag;
-import net.thucydides.core.annotations.WithTagValuesOf;
+
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
