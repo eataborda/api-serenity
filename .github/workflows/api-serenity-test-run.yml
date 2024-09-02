@@ -21,7 +21,7 @@ jobs:
           distribution: 'temurin'
           architecture: x64
       - name: 'Run API tests'
-        run: ./gradlew -Dtags="status_code:201"
+        run: ./gradlew -Dtags="regression"
       - name: 'API serenity test result'
         uses: actions/upload-artifact@v4
         with:

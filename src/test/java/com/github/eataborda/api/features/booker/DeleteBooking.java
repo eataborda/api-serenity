@@ -40,7 +40,7 @@ public class DeleteBooking {
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(response);
         apiSteps.validateResponseHeadersAreNotNullAndNotEmpty(response);
         apiSteps.validateResponseHeadersHasExpectedFields(response);
-        ////Verify that the booking does not exist after deletion
+        ////Verify that the booking does not exist after deletion u
         Response responseAfterDeletingBooking = apiSteps.getBookingById(bookingId);
         apiSteps.validateStatusCode(StatusCode.SC_404.getValue(), responseAfterDeletingBooking);
         apiSteps.validateResponseBodyIsNotNullAndNotEmpty(responseAfterDeletingBooking);
